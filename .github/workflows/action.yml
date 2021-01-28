@@ -12,11 +12,11 @@ jobs:
       - name: IPv4
         run: |
           if [ `curl -LI4 https://fono.jp -o /dev/null -w '%{http_code}\n' -s` != 200 ]; then
-            curl -XPOST -H "Content-Type: application/json" -d '{"content":"<@!${FONO_ACCOUNT_ID}> fono.jp(IPv4) is dead."}' ${DISCORD_WEBHOOK}
+            curl -XPOST -H "Content-Type: application/json" -d '{"content":"<@!${ FONO_ACCOUNT_ID }> fono.jp(IPv4) is dead."}' ${ DISCORD_WEBHOOK }
           fi
           
       - name: IPv6
         run: |
           if [ `curl -LI6 https://fono.jp -o /dev/null -w '%{http_code}\n' -s` != 200 ]; then
-            curl -XPOST -H "Content-Type: application/json" -d '{"content":"<@!${FONO_ACCOUNT_ID}> fono.jp(IPv6) is dead."}' ${DISCORD_WEBHOOK}
+            curl -XPOST -H "Content-Type: application/json" -d '{"content":"<@!${ FONO_ACCOUNT_ID }> fono.jp(IPv6) is dead."}' ${ DISCORD_WEBHOOK }
           fi
