@@ -8,15 +8,12 @@ on:
 jobs:
   FonoServerExternalMonitoring:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        IPversion: [4, 6]
     steps:
-      - name: IPv4
+      - name: IPv${{ matrix.IPversion }}
         run: |
-          if [ `curl -LI4 https://fono.jp -o /dev/null -w '%{http_code}\n' -s` != 200 ]; then
-            curl -XPOST -H "Content-Type: application/json" -d '{"content":"<@!${{ secrets.FONO_ACCOUNT_ID }}> fono.jp(IPv4) is dead."}' ${{ secrets.DISCORD_WEBHOOK }}
-          fi
-          
-      - name: IPv6
-        run: |
-          if [ `curl -LI6 https://fono.jp -o /dev/null -w '%{http_code}\n' -s` != 200 ]; then
-            curl -XPOST -H "Content-Type: application/json" -d '{"content":"<@!${{ secrets.FONO_ACCOUNT_ID }}> fono.jp(IPv6) is dead."}' ${{ secrets.DISCORD_WEBHOOK }}
+          if [ `curl -LI${{ matrix.IPversion }} https://fono.jp -o /dev/null -w '%{http_code}\n' -s` != 200 ]; then
+            curl -XPOST -H "Content-Type: application/json" -d '{"content":"<@!${{ secrets.FONO_ACCOUNT_ID }}> fono.jp(IPv${{ matrix.IPversion }}) is dead."}' ${{ secrets.DISCORD_WEBHOOK }}
           fi
