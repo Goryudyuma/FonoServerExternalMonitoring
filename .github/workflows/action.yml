@@ -14,6 +14,7 @@ jobs:
     steps:
       - name: IPv${{ matrix.IPversion }}
         run: |
-          if [ `curl -LI${{ matrix.IPversion }} https://fono.jp -o /dev/null -w '%{http_code}\n' -s` != 200 ]; then
-            curl -XPOST -H "Content-Type: application/json" -d '{"content":"<@!${{ secrets.FONO_ACCOUNT_ID }}> fono.jp(IPv${{ matrix.IPversion }}) is dead."}' ${{ secrets.DISCORD_WEBHOOK }}
+          if [ `curl -LI${{ matrix.IPversion }} https://fono.jp -o /dev/null -w '%{http_code}\n' -s` == 0 ]; then
+            curl -XPOST -H "Content-Type: application/json" -d '{"content":"私はIPv6疎通がないのに警告しました"}' ${{ secrets.DISCORD_WEBHOOK }}
+            # curl -XPOST -H "Content-Type: application/json" -d '{"content":"<@!${{ secrets.FONO_ACCOUNT_ID }}> fono.jp(IPv${{ matrix.IPversion }}) is dead."}' ${{ secrets.DISCORD_WEBHOOK }}
           fi
