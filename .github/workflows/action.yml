@@ -16,6 +16,6 @@ jobs:
         run: |
           if [ `curl -LI${{ matrix.IPversion }} https://fono.jp -o /dev/null -w '%{http_code}\n' -s` != 200 ]; then
             rc=`curl -LI${{ matrix.IPversion }} https://fono.jp -o /dev/null -w '%{http_code}\n' -s`
-            curl -XPOST -H "Content-Type: application/json" -d '{"content":"response_code: '+${rc}+'"}' ${{ secrets.DISCORD_WEBHOOK }}
+            curl -XPOST -H "Content-Type: application/json" -d '{"content":"response_code: '${rc}'"}' ${{ secrets.DISCORD_WEBHOOK }}
             # curl -XPOST -H "Content-Type: application/json" -d '{"content":"<@!${{ secrets.FONO_ACCOUNT_ID }}> fono.jp(IPv${{ matrix.IPversion }}) is dead."}' ${{ secrets.DISCORD_WEBHOOK }}
           fi
